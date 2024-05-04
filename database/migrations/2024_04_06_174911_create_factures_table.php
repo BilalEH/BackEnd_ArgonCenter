@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('matere_id')->constrained();
             $table->foreignId('etudiant_id')->constrained();
             $table->date('date_paye');
+            $table->decimal('prix', 5, 2);
+            $table->string('mois_facture');
             $table->softDeletes();
             $table->timestamps();
         });

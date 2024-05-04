@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nom');
             $table->string('prenom');
             $table->string('telephone');
-            $table->decimal('pourcentage', 5, 2);
+            $table->decimal('pourcentage', 5, 2)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

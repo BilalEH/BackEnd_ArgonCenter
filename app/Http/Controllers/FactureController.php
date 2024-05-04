@@ -15,7 +15,7 @@ class FactureController extends Controller
     {
         return response([
             'status' => true,
-            'factures' => FactureResource::collection(facture::get())
+            'factures' => FactureResource::collection(facture::get()->sortDesc())
         ]);
     }
 

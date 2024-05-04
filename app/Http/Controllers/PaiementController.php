@@ -40,18 +40,18 @@ class PaiementController extends Controller
             $calPrix = $matere->prix - (($etudiant->pourcentage * $matere->prix) / 100);
         };
 
+        $lastFacDate = Carbon::parse($request->lastFac);
+        $nextMonthDate = $lastFacDate->addMonths(1);
 
         $factureData = [
             'matere_id' => $matere->id,
             'etudiant_id' => $request->etudiant_id,
             'date_paye' => $request->date_paye,
             'prix' => $calPrix,
-            // 'lastFac' => $request->lastFac
+            'mois_facture' => Carbon::parse($nextMonthDate)->format('M Y')
         ];
         facture::create($factureData);
 
-        $lastFacDate = Carbon::parse($request->lastFac);
-        $nextMonthDate = $lastFacDate->addMonths(1);
 
         section::find($id)->etudiants()->updateExistingPivot($request->etudiant_id, ['date_paye' => $nextMonthDate]);
         return response([

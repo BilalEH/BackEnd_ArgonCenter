@@ -16,6 +16,7 @@ class facture extends Model
         'etudiant_id',
         'date_paye',
         'prix',
+        'mois_facture'
     ];
     protected $hidden = [
         'deleted_at',

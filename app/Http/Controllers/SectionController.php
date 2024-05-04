@@ -6,6 +6,7 @@ use App\Http\Resources\SectionResource;
 use App\Models\Etudiant;
 use App\Models\facture;
 use App\Models\section;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -100,6 +101,7 @@ class SectionController extends Controller
             // --------------add facture------------------
             $matere = section::find($id)->matere;
             $etudiant = Etudiant::find($request->etudiant_id);
+
             if ($etudiant->pourcentage) {
                 $calPrix = $matere->prix - (($etudiant->pourcentage * $matere->prix) / 100);
                 $factureData = [
@@ -107,6 +109,7 @@ class SectionController extends Controller
                     'etudiant_id' => $request->etudiant_id,
                     'date_paye' => $request->date_inscription,
                     'prix' => $calPrix,
+                    'mois_facture' => Carbon::parse($request->date_inscription)->format('M Y')
                 ];
                 facture::create($factureData);
             } else {
@@ -115,6 +118,7 @@ class SectionController extends Controller
                     'etudiant_id' => $request->etudiant_id,
                     'date_paye' => $request->date_inscription,
                     'prix' => $matere->prix,
+                    'mois_facture' => Carbon::parse($request->date_inscription)->format('M Y')
                 ];
                 facture::create($factureData);
             }
